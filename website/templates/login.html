@@ -4,18 +4,18 @@
 
 {% block content%}
 
-<form method="POST" id="login">
+<form method="POST" id="loginform">
     <h3 align="center">Log in</h3>
     <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+        <label for="email_input">Email Address</label>
+        <input type="email" class="form-control" id="email_input" name="email" placeholder="Enter email">
     </div>
     <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+        <label for="password_input">Password</label>
+        <input type="password" class="form-control" id="password_input" name="password" placeholder="Enter password">
     </div>
 
     <br />
-    <button type="submit" id="submit" class="btn btn-primary">Log In</button>
+    <button type="submit" id="submit_button" class="btn btn-primary">Log In</button>
 </form>
 {% endblock %}
