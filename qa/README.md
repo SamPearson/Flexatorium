@@ -5,7 +5,9 @@ This directory contains end-to-end testing for the project.
 # Setup and Run
 
 Use the requirements.txt file in this directory to build a virtual environment. 
+
 Recommended: Name the virtual environment qa_env to differentiate from the application's virtual environment.
+
 qa_env is blocked in gitignore to facilitate this.
 
 Tests can be run by executing the pytest command in the project root directory. 
@@ -15,6 +17,7 @@ Tests can be run by executing the pytest command in the project root directory.
 Command line options (defined in conftest.py) can be used to specify a url against the tests will be run
 
 The command line option "baseurl" sets the URL to test against. 
+
 If you have published the application and want to test it live, specify the url of the deployment here
     `$pytest --baseurl=example.com`
 
@@ -23,7 +26,8 @@ This is usually the right URL for testing locally.
 
 ## Markers
 Pytest markers (defined in pytest.ini) are used to categorize tests by feature and by test depth.
-Use these markers to select a suite of tests to run
+
+Use these markers to select a suite of tests to run.
 
 `$pytest -m "signup"`
 
