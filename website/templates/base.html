@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required Metatags for bootstrap-->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap stylesheets -->
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -14,27 +16,50 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           crossorigin="anonymous"
         />
+        <!-- Custom CSS -->
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='main.css') }}"
+        \>
         <title>{% block title %}Home{% endblock %}</title>
     </head>
     <body>
 
+        <header class="site-header">
+            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+                <div class="container">
+                    <a class="navbar-brand mr-4" href="/">Flexatorium</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarToggle">
+                        <div class="navbar-nav mr-auto">
+                            <a class="nav-item nav-link" id="nav_quickstart" href="/">Get Started</a>
+                            <a class="nav-item nav-link" id="nav_public_workouts" href="/public_workouts">Workouts</a>
+                            <a class="nav-item nav-link" id="nav_public_tracks" href="/publicy_tracks">Training Tracks</a>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <div class="navbar-nav">
-                    {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" id="nav_home" href="/">Home</a>
-                    <a class="nav-item nav-link" id="nav_logout" href="/logout">Log Out</a>
-                    {% else %}
-                    <a class="nav-item nav-link" id="nav_login" href="/login">Login</a>
-                    <a class="nav-item nav-link" id="nav_signUp" href="/sign-up">Sign Up</a>
-                    {% endif %}
+                            <a class="nav-item nav-link" href="/">Home</a>
+                            <a class="nav-item nav-link" href="/about">About</a>
+                        </div>
+                        <!-- Navbar Right Side -->
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link" id="nav_timer" href="timer/">Timer</a>
+                            {% if user.is_authenticated %}
+                                <a class="nav-item nav-link" id="nav_profile" href="/my_account">Account</a>
+                                <a class="nav-item nav-link" id="nav_logout" href="/logout">Log Out</a>
+                            {% else %}
+                                <a class="nav-item nav-link" id="nav_login" href="/login">Login</a>
+                                <a class="nav-item nav-link" id="nav_signUp" href="/sign-up">Sign Up</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
+
+
 
 
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -60,12 +85,49 @@
         {% endwith %}
 
 
-        <div class="container">
-            {% block content %}
-            {% endblock %}
-        </div>
+
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}{% endblock %}
+                </div>
+
+                <!-- Show the nav section -->
+                {% if user.is_authenticated %}
+                    <div class="col-md-4">
+                        <div class="content-section">
+                            <h3>Top Secret Area</h3>
+                            <p class='text-muted'>Your plan, your progress, your very favorite workouts.
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-light">
+                                        <a id="nav_journal" href="log_workout/">My Journal</a>
+                                    </li>
+                                    <li class="list-group-item list-group-item-light">
+                                        <a id="nav_my_exercises" href="/my_exercises">My Exercises</a>
+                                    </li>
+                                    <li class="list-group-item list-group-item-light">
+                                        <a id="nav_my_workouts" href="/my_workouts">My Workouts</a>
+                                    </li>
+                                    <li class="list-group-item list-group-item-light">
+                                        <a id="nav_my_tracks" href="/my_tracks">My Training Tracks</a>
+                                    </li>
+                                    <li class="list-group-item list-group-item-light">
+                                        <a id="nav_log_workout" href="log_workout/">Start Workout</a>
+                                    </li>
+
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </main>
 
 
+
+
+        <!-- Optional JS for bootstrap -->
         <script
           src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
           integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

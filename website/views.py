@@ -33,3 +33,39 @@ def delete_note():
             db.session.delete(note)
             db.session.commit()
     return jsonify({})
+
+
+@views.route('/public_workouts', methods=['Get'])
+def public_workouts():
+    return "heyo!"
+
+
+@views.route('/my_workouts', methods=['Get'])
+def my_workouts():
+    return "heyo!"
+
+
+@views.route('/public_tracks', methods=['Get'])
+def public_tracks():
+    return "heyo!"
+
+
+@views.route('/my_tracks', methods=['Get'])
+def my_tracks():
+    return "heyo!"
+
+
+@views.route('/log_workout', methods=['Get'])
+def log_workout():
+    return "heyo!"
+
+
+@views.route('/about', methods=['Get'])
+def about():
+    return "heyo!"
+
+
+@views.route('/timer', methods=['Get'])
+def timer():
+    return "heyo!"
+
