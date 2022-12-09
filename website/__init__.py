@@ -15,11 +15,23 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .views import views
-    from .auth import auth
+    from .home_routes import home_routes
+    app.register_blueprint(home_routes, url_prefix='/')
 
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(auth, url_prefix='/')
+    from .exercise_routes import exercises
+    app.register_blueprint(exercises, url_prefix='/exercises')
+
+    from .workout_routes import workouts
+    app.register_blueprint(workouts, url_prefix='/workouts')
+
+    from .training_track_routes import training_tracks
+    app.register_blueprint(training_tracks, url_prefix='/training_tracks')
+
+    from .user_routes import user_routes
+    app.register_blueprint(user_routes, url_prefix='/')
+
+    from .journal_routes import journal_routes
+    app.register_blueprint(journal_routes, url_prefix='/journal/')
 
     from . import models
 

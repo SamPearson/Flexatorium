@@ -7,10 +7,10 @@ from flask_login import login_user, login_required, logout_user, current_user
 from .forms import SignupForm, LoginForm
 
 
-auth = Blueprint('auth', __name__)
+user_routes = Blueprint('auth', __name__)
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@user_routes.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -30,14 +30,14 @@ def login():
     return render_template("login.html", user=current_user, form=form)
 
 
-@auth.route('/logout')
+@user_routes.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@user_routes.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
 
     form = SignupForm()
