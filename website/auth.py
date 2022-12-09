@@ -4,6 +4,8 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 
+from .forms import SignupForm, LoginForm
+
 
 auth = Blueprint('auth', __name__)
 
@@ -19,13 +21,13 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('user_pages.journal'))
             else:
                 flash('Incorrect password', category='error')
         else:
             flash('No user with that email.', category='error')
-
-    return render_template("login.html", user=current_user)
+    form = LoginForm()
+    return render_template("login.html", user=current_user, form=form)
 
 
 @auth.route('/logout')
@@ -37,31 +39,25 @@ def logout():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        first_name = request.form.get('firstName')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
 
-        user = User.query.filter_by(email=email).first()
+    form = SignupForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
         if user:
             flash('Email already registered', category='error')
 
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters', category='error')
-        elif len(first_name) < 2:
-            flash('First Name must be at least 2 characters', category='error')
-        elif password1 != password2:
-            flash('Passwords do not match', category='error')
-        elif len(password1) < 7:
-            flash('Password must be at least 7 characters')
         else:
-            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
+            email = form.email.data
+            username = form.username.data
+            password = form.password.data
+
+            new_user = User(email=email, first_name=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            flash('Account created!', category='success')
+            flash(f'Account created for {form.username.data}!', 'success')
             login_user(new_user, remember=True)
-            return redirect(url_for('views.home'))  # views file, home function.
+            return redirect(url_for('public_pages.home'))  # views file, home function.
 
-    return render_template("signup.html", user=current_user)
+    return render_template("signup.html", user=current_user, form=form)
 
