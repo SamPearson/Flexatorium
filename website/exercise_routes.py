@@ -45,6 +45,15 @@ def favorites():
 @login_required
 def edit():
     form = EditExerciseForm()
-    return render_template("edit_exercise.html", user=current_user, action="Edit", form=form)
+    # send the exercise ID with the request when editing
+    exercise_id = 1
+    return render_template("edit_exercise.html", user=current_user, form=form, exercise_id=exercise_id)
+
+
+@exercises.route('/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    form = EditExerciseForm()
+    return render_template("edit_exercise.html", user=current_user, form=form, exercise_id=None)
 
 

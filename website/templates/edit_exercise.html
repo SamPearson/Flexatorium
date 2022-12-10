@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
+{% if exercise_id == None %}
+  {% set action = "Create" %}
+{% else %}
+  {% set action = "Edit" %}
+{% endif %}
+
 {% block content%}
-<h1 align="center">Edit Exercise</h1>
-<p>This is the edit page for Exercises!</p>
+<h1 align="center">{{ action }} Exercise</h1>
+<p>This is the {{ action }} page for Exercises!</p>
 <p>You may have hit some kind of "create" button to get here, but what is "creating" if not "editing a new one"?</p>
 
 
