@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template
 from flask_login import current_user, login_required
 
+from .forms import EditExerciseForm
+
 exercises = Blueprint('exercises', __name__)
 
 sample_exercise_templates = [
@@ -42,4 +44,7 @@ def favorites():
 @exercises.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-    return render_template("edit_exercise.html", user=current_user)
+    form = EditExerciseForm()
+    return render_template("edit_exercise.html", user=current_user, action="Edit", form=form)
+
+
