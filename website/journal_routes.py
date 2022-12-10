@@ -4,12 +4,12 @@ from .models import Note
 from . import db
 import json
 
-views = Blueprint('views', __name__)
+journal_routes = Blueprint('user_pages', __name__)
 
 
-@views.route('/', methods=['GET', 'POST'])
+@journal_routes.route('/', methods=['GET', 'POST'])
 @login_required
-def home():
+def journal():
     if request.method == 'POST':
         note = request.form.get('note')
         if len(note) < 1:
@@ -20,10 +20,11 @@ def home():
             db.session.commit()
             flash('Note added!', category='success')
 
-    return render_template("home.html", user=current_user)
+    return render_template("journal.html", user=current_user)
 
 
-@views.route('/delete-note', methods=['Post'])
+@journal_routes.route('/delete-note', methods=['Post'])
+@login_required
 def delete_note():
     note = json.loads(request.data)
     noteId = note['noteId']
