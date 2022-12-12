@@ -52,7 +52,7 @@ def sign_up():
             username = form.username.data
             password = form.password.data
 
-            new_user = User(email=email, first_name=username, password=generate_password_hash(password, method='sha256'))
+            new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             flash(f'Account created for {form.username.data}!', 'success')
