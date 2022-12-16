@@ -3,16 +3,11 @@ from flask_login import current_user, login_required
 
 workouts = Blueprint('workouts', __name__)
 
-mockup_workouts = [
-    {
-        '': ''
-    }
-]
-
+from .dummy_data import *
 
 @workouts.route('/browse', methods=['GET', 'POST'])
 def browse():
-    return render_template("browse_workouts.html", user=current_user, workouts=mockup_workouts)
+    return render_template("browse_workouts.html", user=current_user, workout_data=sample_workouts)
 
 
 @workouts.route('/favorites', methods=['GET', 'POST'])

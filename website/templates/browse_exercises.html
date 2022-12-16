@@ -12,15 +12,14 @@
 
 <p>A (collapsed) list of all exercises that match the filter goes here</p>
 <p>Maybe the exercises will look like this!</p>
-{% for exercise in ex_templates %}
+{% for exercise in exercise_data %}
   <article class="media content-section">
     <div class="media-body">
       <div class="article-metadata">
-        <small class="mr-2">Measurable things:</small>
-        <small class="text-muted">{{ exercise.intensity_unit }}</small>
-        <small class="text-muted">{{ exercise.duration_unit }}</small>
+        <small class="mr-2">{{ exercise.rep_string() }}</small>
+        <small class="text-muted">look this color exists</small>
       </div>
-      <h4><a class="article-title" href="#">{{ exercise.name }}</a></h4>
+      <h4><a class="article-title" href="#">{{ exercise.name + exercise.rep_string() }}</a></h4>
       <p class="article-content">{{ exercise.description }}</p>
       <p class="article-content">{{ exercise.notes }}</p>
     </div>

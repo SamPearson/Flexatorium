@@ -11,5 +11,23 @@
 <hr/>
 
 <p>A list of search-matching workouts will go here</p>
+{% for workout in workout_data %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="mr-2">maybe tags go here</small>
+        <small class="text-muted">look this color exists</small>
+      </div>
+      <h2><a class="article-title" href="#">{{ workout.name }}</a></h2>
+      {% for exercise_group in workout.exercise_groups %}
+      <hr/>
+        <h4>{{ exercise_group.name }}</h4>
+          {% for exercise in exercise_group.exercises %}
+          <p class="article-content">{{ exercise.name + " - " ~ exercise.reps + " reps" }}</p>
+          {% endfor %}
+      {% endfor %}
+    </div>
+  </article>
+{% endfor %}
 
 {% endblock content %}

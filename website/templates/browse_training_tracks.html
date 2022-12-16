@@ -12,4 +12,18 @@
 
 <p>A list of search-matching training tracks will go here</p>
 
+{% for training_track in training_track_data %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="mr-2">maybe tags go here</small>
+        <small class="text-muted">look this color exists</small>
+      </div>
+      <h2><a class="article-title" href="#">{{ training_track.name }}</a></h2>
+      <p class="article-content">{{ training_track.days() }} days long</p>
+      <p class="article-content">{{ training_track.description }}</p>
+    </div>
+  </article>
+{% endfor %}
+
 {% endblock content %}

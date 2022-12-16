@@ -5,34 +5,11 @@ from .forms import EditExerciseForm
 
 exercises = Blueprint('exercises', __name__)
 
-sample_exercise_templates = [
-    {
-        'name': 'Rowing Machine',
-        'description': """Simulated boat rowing on a machine. """,
-        'intensity_unit': 'spm',
-        'duration_unit': 'meters',
-        'notes': 'Rowing machines vary'
-    },
-    {
-        'name': 'Curl + Arnold Press',
-        'description': 'A curl followed by the arnold press',
-        'intensity_unit': 'lbs',
-        'duration_unit': 'reps',
-        'notes': ''
-    },
-    {
-        'name': 'Deadlift',
-        'description': 'Simulated Boat Rowing on a machine',
-        'intensity_unit': 'spm',
-        'duration_unit': 'meters',
-        'notes': 'Rowing machines vary'
-    }
-]
-
+from .dummy_data import *
 
 @exercises.route('/browse', methods=['GET', 'POST'])
 def browse():
-    return render_template("browse_exercises.html", user=current_user, ex_templates=sample_exercise_templates)
+    return render_template("browse_exercises.html", user=current_user, exercise_data=sample_exercises)
 
 
 @exercises.route('/favorites', methods=['GET', 'POST'])
