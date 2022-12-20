@@ -1,7 +1,8 @@
+
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-
+from sqlalchemy_json import MutableJson
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,7 @@ class RegisteredUser(db.Model, UserMixin):
     username = db.Column(db.String(150), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     # Announcing a relationship with the Note class and storing linked Notes
-    # Note that the class Note is capitalized here, Note's reference to this class is lower case.
+    # The class name is capitalized here, Its reference to this class is in lower case.
     notes = db.relationship('Note')
 
     def __repr__(self):
@@ -37,17 +38,19 @@ class ConfigOption(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     unit_name = db.Column(db.String(150), unique=True, nullable=False)
     unit_type = db.Column(db.String(150), unique=True, nullable=False)
-    unit_behavior = db.Column(db.String(150), unique=True, nullable=False)
 
 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(150), unique=True, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('registered_user.id'))
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    description = db.Column(db.String(250), default='')
+
     config_options = db.relationship('ConfigOption', secondary=exercise_config_option, backref='exercises')
-    muscle_group = db.Column(db.String(150))  # basically tags
-    training_focus = db.Column(db.String(150))  # cardio/endurance/etc, also basically tags
-    tags = db.Column(db.String(150))  # basically tags
+    config = db.Column(MutableJson)
+    muscle_group = db.Column(db.String(150), default='')  # basically tags
+    training_focus = db.Column(db.String(150), default='')  # cardio/endurance/etc, also basically tags
+    tags = db.Column(db.String(150), default='')  # basically tags
 
 
 class ExerciseGroup(db.Model):

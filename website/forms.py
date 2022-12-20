@@ -1,6 +1,7 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, FormField, FieldList, \
+    TextAreaField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 
 
 class SignupForm(FlaskForm):
@@ -27,10 +28,17 @@ class LoginForm(FlaskForm):
     submit_button = SubmitField('Log In')
 
 
+class ExerciseConfigField(Form):
+    name = StringField('Option Name')
+    value = IntegerField('Value', validators=[Optional()])
+
+
 class EditExerciseForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    description = StringField('Description')
-    config_options = StringField('Configuration Options')
-    tags = StringField('Tags')
+    description = TextAreaField('Description', validators=[Optional()])
+    config_types = FieldList(StringField())
+    config_unit_names = FieldList(StringField())
+
+    tags = StringField('Tags', validators=[Optional()])
 
     save_button = SubmitField('Save')
