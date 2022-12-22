@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import Blueprint, render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 from collections import defaultdict
+import json
 
 from .forms import EditExerciseForm
 
@@ -65,3 +66,14 @@ def create():
     return render_template("edit_exercise.html", user=current_user, form=form, exercise_id=None)
 
 
+@exercises.route('/delete', methods=['Post'])
+@login_required
+def delete_note():
+    exercise = json.loads(request.data)
+    exercise_id = exercise['exerciseId']
+    exercise = Exercise.query.get(exercise_id)
+    if exercise:
+        if exercise.owner_id == current_user.id:
+            db.session.delete(exercise)
+            db.session.commit()
+    return jsonify({})

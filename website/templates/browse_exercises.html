@@ -18,7 +18,9 @@
         {% for config_category in exercise.config.keys() %}
           <small class="text-muted border border-secondary rounded p-1">{{ config_category }}</small>
         {% endfor %}
-
+        <button type="button" class="close" onClick="deleteExercise({{ exercise.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <h4><a class="article-title" href="#">{{ exercise.name }}</a></h4>
       <p class="article-content">{{ exercise.description }}</p>
@@ -27,3 +29,10 @@
 {% endfor %}
 
 {% endblock content %}
+
+{% block javascript %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='exercises.js') }}"
+></script>
+{% endblock %}

@@ -25,3 +25,12 @@ $(".add-config-option-button").click(function(){
     $('.config-options').append(newRow);
     $('.config-options').attr("option-count", count + 1);
 });
+
+function deleteExercise(exerciseId) {
+    fetch('/exercises/delete', {
+    method: 'POST',
+    body: JSON.stringify({ exerciseId: exerciseId })
+    }).then((_res) => {
+        window.location.href = "/exercises/browse";
+    });
+}
