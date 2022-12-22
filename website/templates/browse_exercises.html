@@ -11,19 +11,21 @@
 
 
 {% for exercise in exercise_data %}
-  <article class="media content-section">
+  <article class="media content-section exercise-card">
     <div class="media-body">
       <div class="article-metadata">
         <small class="mr-2">Configuration Options: </small>
         {% for config_category in exercise.config.keys() %}
-          <small class="text-muted border border-secondary rounded p-1">{{ config_category }}</small>
+          <small class="text-muted border border-secondary rounded p-1 exercise-config-option-tag">
+            {{ config_category }}
+          </small>
         {% endfor %}
-        <button type="button" class="close" onClick="deleteExercise({{ exercise.id }})">
+        <button type="button" class="close delete-exercise-button" onClick="deleteExercise({{ exercise.id }})">
             <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <h4><a class="article-title" href="#">{{ exercise.name }}</a></h4>
-      <p class="article-content">{{ exercise.description }}</p>
+      <h4><a class="article-title exercise-name" href="#">{{ exercise.name }}</a></h4>
+      <p class="article-content exercise-description">{{ exercise.description }}</p>
     </div>
   </article>
 {% endfor %}
