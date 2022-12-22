@@ -3,16 +3,12 @@ from flask_login import current_user, login_required
 
 training_tracks = Blueprint('training_tracks', __name__)
 
-mockup_training_tracks = [
-    {
-        '': ''
-    }
-]
+from .dummy_data import *
 
 
 @training_tracks.route('/browse', methods=['GET', 'POST'])
 def browse():
-    return render_template("browse_training_tracks.html", user=current_user, workouts=mockup_training_tracks)
+    return render_template("browse_training_tracks.html", user=current_user, training_track_data=sample_training_track)
 
 
 @training_tracks.route('/favorites', methods=['GET', 'POST'])

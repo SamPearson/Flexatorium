@@ -3,28 +3,38 @@
 {% block content%}
 
 <h1 align="center">Browse Exercises</h1>
-<p>Pull up a flex and get ready to party</p>
 <hr/>
 
 <p>A big form for filtering goes here</p>
 <p>The form contains a link to save this search as a fave</p>
 <hr/>
 
-<p>A (collapsed) list of all exercises that match the filter goes here</p>
-<p>Maybe the exercises will look like this!</p>
-{% for exercise in ex_templates %}
-  <article class="media content-section">
+
+{% for exercise in exercise_data %}
+  <article class="media content-section exercise-card">
     <div class="media-body">
       <div class="article-metadata">
-        <small class="mr-2">Measurable things:</small>
-        <small class="text-muted">{{ exercise.intensity_unit }}</small>
-        <small class="text-muted">{{ exercise.duration_unit }}</small>
+        <small class="mr-2">Configuration Options: </small>
+        {% for config_category in exercise.config.keys() %}
+          <small class="text-muted border border-secondary rounded p-1 exercise-config-option-tag">
+            {{ config_category }}
+          </small>
+        {% endfor %}
+        <button type="button" class="close delete-exercise-button" onClick="deleteExercise({{ exercise.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <h4><a class="article-title" href="#">{{ exercise.name }}</a></h4>
-      <p class="article-content">{{ exercise.description }}</p>
-      <p class="article-content">{{ exercise.notes }}</p>
+      <h4><a class="article-title exercise-name" href="#">{{ exercise.name }}</a></h4>
+      <p class="article-content exercise-description">{{ exercise.description }}</p>
     </div>
   </article>
 {% endfor %}
 
 {% endblock content %}
+
+{% block javascript %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='exercises.js') }}"
+></script>
+{% endblock javascript%}
