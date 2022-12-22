@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+<!-- "creating" is just "editing a new one", so this page is reused for both roles -->
 {% if exercise_id == None %}
   {% set action = "Create" %}
 {% else %}
@@ -52,10 +53,6 @@
 
       </div>
       <hr>
-
-
-
-
     </fieldset>
 
     <div class="form-group">
@@ -66,9 +63,8 @@
 
   </form>
 </div>
-
-
 {% endblock content %}
+
 
 {% block javascript %}
 <script

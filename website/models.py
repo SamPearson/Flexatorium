@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from sqlalchemy_json import MutableJson
 
+
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
@@ -26,16 +27,9 @@ class RegisteredUser(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-exercise_config_option = db.Table('exercise_config_option_table',
-                                  db.Column('exercise_id', db.Integer,
-                                            db.ForeignKey('exercise.id')),
-                                  db.Column('config_option_id', db.Integer,
-                                            db.ForeignKey('config_option.id')),
-                                  )
-
-
 class ConfigOption(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    owner_id = db.Column(db.Integer, default=0)
     unit_name = db.Column(db.String(150), unique=True, nullable=False)
     unit_type = db.Column(db.String(150), unique=True, nullable=False)
 
@@ -46,8 +40,11 @@ class Exercise(db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.String(250), default='')
 
-    config_options = db.relationship('ConfigOption', secondary=exercise_config_option, backref='exercises')
+    '''Lbs/kg/minutes/seconds/incline/decline/resistance band color... the options are endless,
+        so they should be user-defined and stored in a blob for scale and flexibility'''
     config = db.Column(MutableJson)
+
+    # TODO: unused/punted columns for tagging/categorizing exercises
     muscle_group = db.Column(db.String(150), default='')  # basically tags
     training_focus = db.Column(db.String(150), default='')  # cardio/endurance/etc, also basically tags
     tags = db.Column(db.String(150), default='')  # basically tags
