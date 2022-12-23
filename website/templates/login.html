@@ -4,21 +4,21 @@
 {% block content%}
 <div class="content-section">
 
-  <form method="POST">
+  <form method="POST" id="login-form">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">Log In</legend>
       <div class="form-group">
         {{ form.email.label(class="form-control-label") }}
         {% if form.email.errors %}
-          {{ form.email(class="form-control form-control-lg is-invalid") }}
+          {{ form.email(class="form-control form-control-lg is-invalid email-field") }}
           <div class="invalid-feedback">
             {% for error in form.email.errors %}
-              <span>{{ error }}</span>
+              <span class="email-error">{{ error }}</span>
             {% endfor %}
           </div>
         {% else %}
-          {{ form.email(class="form-control form-control-lg") }}
+          {{ form.email(class="form-control form-control-lg email-field") }}
         {% endif %}
 
       </div>
@@ -26,29 +26,29 @@
       <div class="form-group">
         {{ form.password.label(class="form-control-label") }}
         {% if form.password.errors %}
-          {{ form.password(class="form-control form-control-lg is-invalid") }}
+          {{ form.password(class="form-control form-control-lg is-invalid password-field") }}
           <div class="invalid-feedback">
             {% for error in form.password.errors %}
-              <span>{{ error }}</span>
+              <span class="password-error">{{ error }}</span>
             {% endfor %}
           </div>
         {% else %}
-          {{ form.password(class="form-control form-control-lg") }}
+          {{ form.password(class="form-control form-control-lg password-field") }}
         {% endif %}
       </div>
 
       <div class="form-check">
-        {{ form.remember(class="form-check-input")}}
+        {{ form.remember(class="form-check-input remember-me-checkbox")}}
         {{form.remember.label(class="form-check-label")}}
       </div>
     </fieldset>
 
     <div class="form-group">
-      {{ form.submit_button(class="btn btn-outline-info") }}
+      {{ form.submit_button(class="btn btn-outline-info submit-button") }}
     </div>
     <div class="border-top pt-3">
       <small class="text-muted">
-        Don't have an account? <a class="ml-2" href="{{url_for('auth.sign_up')}}">Sign up!</a>
+        Don't have an account? <a id="signup-link" class="ml-2" href="{{url_for('auth.sign_up')}}">Sign up!</a>
       </small>
     </div>
 
