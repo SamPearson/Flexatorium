@@ -10,7 +10,7 @@ class TestLogin:
 
     @pytest.mark.smoke
     def test_valid_credentials(self, login):
-        login.send_credentials("bill@partycentral.net", "sillywilly")
+        login.send_credentials("bill@partycentral.net", "sillybilly")
         assert login.success_message_present(), "Could not log in - was the hard-coded test user registered?"
 
     @pytest.mark.midweight
