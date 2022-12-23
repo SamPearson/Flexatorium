@@ -17,7 +17,6 @@ def pytest_addoption(parser):
                      help="Base URL for the application under test")
 
 
-
 @pytest.fixture
 def driver(request):
     config.baseurl = request.config.getoption("--baseurl")

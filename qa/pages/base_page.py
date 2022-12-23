@@ -44,10 +44,9 @@ class BasePage:
                 return False
             return True
         else:
-            try:
-
-                e = self._find(locator)
-                print(e)
-                return self._find(locator).is_displayed()
-            except NoSuchElementException:
+            e = self._find(locator)
+            if e:
+                return e.is_displayed()
+            else:
                 return False
+

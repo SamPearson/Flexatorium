@@ -1,12 +1,12 @@
-from pages.base_page import  BasePage
+from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
 
 class LoginPage(BasePage):
-    _login_form = {"by": By.ID, "value": "login_form"}
-    _email_input = {"by": By.ID, "value": "email_input"}
-    _password_input = {"by": By.ID, "value": "password_input"}
-    _submit_button = {"by": By.ID, "value": "submit_button"}
+    _login_form = {"by": By.ID, "value": "login-form"}
+    _email_input = {"by": By.CLASS_NAME, "value": "email-field"}
+    _password_input = {"by": By.CLASS_NAME, "value": "password-field"}
+    _submit_button = {"by": By.CLASS_NAME, "value": "submit-button"}
 
     _success_message = {"by": By.ID, "value": "success-notif"}
     _failure_message = {"by": By.ID, "value": "failure-notif"}
