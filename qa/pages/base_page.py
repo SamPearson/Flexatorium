@@ -29,6 +29,8 @@ class BasePage:
             return False
 
     def _click(self, locator):
+        element = self._find(locator)
+        assert element, f"Click action failed, cannot locate an element with {locator}"
         self._find(locator).click()
 
     def _type(self, locator, input_text):
@@ -66,11 +68,15 @@ class BasePage:
         else:
             return "No error message found"
 
+    # Most tests will require logging in, so login page elements are stored here instead of
+    # an independent page
     _login_page_email_input = {"by": By.CLASS_NAME, "value": "email-field"}
     _login_page_password_input = {"by": By.CLASS_NAME, "value": "password-field"}
     _login_page_submit_button = {"by": By.CLASS_NAME, "value": "submit-button"}
 
     def attempt_login(self, email="testuser@example.com", password="testuser_bestuser"):
+        # Allows for failed login attempts without throwing exceptions
+        # useful for testing error messages
         self._visit("/login")
         self._type(self._login_page_email_input, email)
         self._type(self._login_page_password_input, password)
