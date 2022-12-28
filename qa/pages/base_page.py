@@ -74,6 +74,7 @@ class BasePage:
     _login_page_password_input = {"by": By.CLASS_NAME, "value": "password-field"}
     _login_page_submit_button = {"by": By.CLASS_NAME, "value": "submit-button"}
 
+    # TODO: Do not hardcode credentials here
     def attempt_login(self, email="testuser@example.com", password="testuser_bestuser"):
         # Allows for failed login attempts without throwing exceptions
         # useful for testing error messages
