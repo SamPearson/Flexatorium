@@ -1,19 +1,19 @@
 import pytest
-from pages import login_page
+from pages import base_page
 
 
 @pytest.mark.login
 class TestLogin:
     @pytest.fixture
-    def login(self, driver):
-        return login_page.LoginPage(driver)
+    def page(self, driver):
+        return base_page.BasePage(driver)
 
     @pytest.mark.smoke
-    def test_valid_credentials(self, login):
-        login.send_credentials("bill@partycentral.net", "sillybilly")
-        assert login.success_message_present(), "Could not log in - was the hard-coded test user registered?"
+    def test_valid_credentials(self, page):
+        page.login()
+        assert page.success_message_present()
 
     @pytest.mark.midweight
-    def test_invalid_credentials(self, login):
-        login.send_credentials("bademail@addr.ess", "badpassword")
-        assert login.failure_message_present()
+    def test_invalid_credentials(self, page):
+        page.attempt_login("UnregisteredEmail@example.info", "L")
+        assert page.failure_message_present()

@@ -6,10 +6,6 @@ from . import config
 import re
 
 
-# Adapt this file from the other project
-# Then build out login_test
-# Get the test suite running
-
 def pytest_addoption(parser):
     parser.addoption("--baseurl",
                      action="store",
