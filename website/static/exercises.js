@@ -1,13 +1,14 @@
 
 
 $("body").on("click", ".delete-config-option-button", function() {
-    var count = parseInt( $('.config-options').attr("option-count") );
+    var count = parseInt( $('.config-option-fields').attr("option-count") );
     $(this).parents(".config-option-row").remove();
-    $('.config-options').attr("option-count", count - 1);
+    $('.config-option-fields').attr("option-count", count - 1);
 })
 
 $(".add-config-option-button").click(function(){
-    var count = parseInt( $('.config-options').attr("option-count") );
+    console.log("party time")
+    var count = parseInt( $('.config-option-fields').attr("option-count") );
     newRow =
         '<div class="form-group row config-option-row config-option-field">' +
         '<div class="col">' +
@@ -22,8 +23,8 @@ $(".add-config-option-button").click(function(){
           '<button type="button" class="btn btn-danger delete-config-option-button">Remove</button>' +
         '</div>' +
       '</div>';
-    $('.config-options').append(newRow);
-    $('.config-options').attr("option-count", count + 1);
+    $('.config-option-fields').append(newRow);
+    $('.config-option-fields').attr("option-count", count + 1);
 });
 
 function deleteExercise(exerciseId) {
