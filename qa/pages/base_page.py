@@ -22,6 +22,13 @@ class BasePage:
         except IndexError:
             return False
 
+    def _find_child(self, parent, locator):
+        children = parent.find_elements(locator["by"], locator["value"])
+        try:
+            return children[0]
+        except IndexError:
+            return False
+
     def _find_all(self, locator):
         try:
             return self.driver.find_elements(locator["by"], locator["value"])
@@ -74,6 +81,7 @@ class BasePage:
     _login_page_password_input = {"by": By.CLASS_NAME, "value": "password-field"}
     _login_page_submit_button = {"by": By.CLASS_NAME, "value": "submit-button"}
 
+    # TODO: Do not hardcode credentials here
     def attempt_login(self, email="testuser@example.com", password="testuser_bestuser"):
         # Allows for failed login attempts without throwing exceptions
         # useful for testing error messages
