@@ -8,7 +8,7 @@ class BrowseExercisePage(BasePage):
     _exercise_name = {"by": By.CLASS_NAME, "value": "exercise-name"}
     _exercise_description = {"by": By.CLASS_NAME, "value": "exercise-description"}
     _exercise_config_option_tag = {"by": By.CLASS_NAME, "value": "exercise-config-option-tag"}
-    _exercise_delete_button = {"by": By.CLASS_NAME, "value": "delete-exercise-button"}
+    _delete_exercise_button = {"by": By.CLASS_NAME, "value": "delete-exercise-button"}
 
     def __init__(self, driver):
         self.driver = driver
@@ -25,25 +25,31 @@ class BrowseExercisePage(BasePage):
 
         for card in cards:
             exercises.append({
-                "name": self._find_child(card, self._exercise_name),
-                "description": self._find_child(card, self._exercise_description),
-                "options": [c.text for c in self._find_child(card, self._exercise_config_option_tag)]
+                "name": self._find_child(card, self._exercise_name).text,
+                "description": self._find_child(card, self._exercise_description).text,
+                "options": [c.text for c in self._find_children(card, self._exercise_config_option_tag)]
             })
+            print(card)
+
+        print(exercises)
         return exercises
 
     def get_exercise(self, name):
+        for exercise in self.get_exercise_data():
+            if name == exercise['name']:
+                return exercise
+
+        return False
+
+    def get_exercise_card_element(self, name):
         for exercise in self._find_all(self._exercise_card):
-            if name == exercise.name:
+            if name == self._find_child(exercise, self._exercise_name).text:
                 return exercise
 
         return False
 
     def delete_exercise(self, name):
-        matching_exercises = [e for e in self._find_all(self._exercise_card)
-                              if self._find_child(e, self._exercise_name) == name]
+        exercise = self.get_exercise_card_element(name)
 
-        assert len(matching_exercises), f'Cannot delete exercise "{name}", could not find matching exercise'
-        assert len(matching_exercises) == 1, f'Cannot delete exercise - too many exercises matching "{name}"'
-
-        delete_button = self._find_child(matching_exercises[0], self._delete_exercise_button)
+        delete_button = self._find_child(exercise, self._delete_exercise_button)
         delete_button.click()
