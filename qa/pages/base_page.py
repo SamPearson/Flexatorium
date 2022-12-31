@@ -29,6 +29,13 @@ class BasePage:
         except IndexError:
             return False
 
+    def _find_children(self, parent, locator):
+        children = parent.find_elements(locator["by"], locator["value"])
+        try:
+            return children
+        except IndexError:
+            return False
+
     def _find_all(self, locator):
         try:
             return self.driver.find_elements(locator["by"], locator["value"])
